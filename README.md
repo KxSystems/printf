@@ -9,3 +9,9 @@ The kdb-x printf module replicates a subset of the C99 printf standard to format
 ## Installation Documentation
 
 :point_right: [`Install guide`](docs/install.md)
+
+## Notice
+
+Copyright (c) 2026 KX Systems, Inc.
+
+Licensed under the Apache License, Version 2.0.
