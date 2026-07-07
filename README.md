@@ -12,7 +12,7 @@ The kdb-x printf module replicates a subset of the C99 printf standard to format
 
 ## Conda package
 
-To build and use conda package see [`Conda usage`](https://github.com/KxSystems/qmamba/wiki/Build)
+For information on how to build and host a conda package see [`Conda usage`](https://github.com/KxSystems/qmamba/wiki/Build)
 
 ## Notice
 
