@@ -1,5 +1,17 @@
-validFlags:"-+ 0";
+validFlags:"-+ 0'";
 HEX:"0123456789abcdef";
+GROUPSEP:",";
+GROUPSIZE:3;
+
+groupnum:{[s]
+    sgn:$[first[s]="-";"-";""];
+    s:(count sgn) _ s;
+    dot:s?".";
+    (i;f):(dot#s;dot _ s);
+    if[GROUPSIZE>=count i;:sgn,s];
+    n:neg[count i] mod GROUPSIZE;
+    sgn,((n _ GROUPSEP sv GROUPSIZE cut (n#" "),i) except " "),f
+ };
 
 typeConversions:([
     d:{$[10h~type x;"J"$x;"j"$x]};
@@ -23,15 +35,19 @@ typePrecisions:([
 
 typeFlags:string key typeConversions;
 
+groupTypes:"df";
+
 fwn:{nxy:not x in y;i:first where nxy;a:i#x;b:i _x;(a;b)};
 
 vconst:{[flags;width;precision;ty;variable]
-    (fneg;fpos;fspace;fzero):validFlags in flags;
+    (fneg;fpos;fspace;fzero;fgroup):validFlags in flags;
     fpres:0b;
     if[ty~"";:""]; // early exit if nothing
     a:typeConversions[`$ty][variable];
     if[not ""~precision;precision:"J"$1 _ precision;fpres:1b];
     res:typePrecisions[`$ty][a;precision];
+    // group before padding, so separators count toward the field width
+    if[fgroup & ty in groupTypes;res:groupnum res];
     if[ty in "fd";if[a>=0;res:$[fpos;"+";fspace;" ";""],res]];
     if[width~"";:res];
     pad:("J"$width)-count res;

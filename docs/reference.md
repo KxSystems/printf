@@ -33,7 +33,8 @@ Hence, the specification for this module is as follows:
 
 ### Flags
 
-Of the C99 standard flags available, only the "alternate form" is excluded.
+Of the C99 standard flags available, only the "alternate form" is excluded. The `'` flag, which is
+a POSIX addition rather than part of C99, is supported.
 
 |    Text   |Description|
 |:---------:|:-----------:|
@@ -41,6 +42,23 @@ Of the C99 standard flags available, only the "alternate form" is excluded.
 |     +     | Prepends a plus sign for a positive value; by default a positive value does not have a prefix|
 |   (space) | Prepends a space character for a positive value; ignored if the + flag exists; by default a positive value does not have a prefix|
 |     0     | When the 'width' option is specified, prepends zeros instead of spaces for numeric types; for example, printf("%4X",3) produces "   3", while printf("%04X",3); produces "0003"|
+|     '     | Groups the integer part in thousands, e.g. printf("%'d";1000) produces "1,000". Applies to `d` and `f` only, and is ignored for all other conversions|
+
+The `'` flag deviates from POSIX in one respect. POSIX takes the separator and grouping rules from
+the locale's `LC_NUMERIC`, but q has no locale, so this module always groups in threes with a comma:
+
+```q
+q)printf ("%'d"; 1234567)
+"1,234,567"
+q)printf ("%'.2f"; 1234567.891)      / integer part only, fraction untouched
+"1,234,567.89"
+q)printf ("%'015d"; 1234567)         / padding zeros are not grouped
+"0000001,234,567"
+```
+
+Grouping is applied before width padding, so the separators count toward the field width. It is
+ignored for `x`, `X`, `o`, `O` (not base 10), and for `s` and `r` (not numeric) — matching C, which
+ignores the flag on those conversions rather than raising an error.
 
 ### Width
 
