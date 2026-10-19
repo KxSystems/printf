@@ -1,5 +1,5 @@
 context:
-  version: "1.0.2"
+  version: ${{ env.get("PKG_VERSION", default="0.0.0") }}
 
 package:
   name: q-kx-printf
@@ -17,6 +17,15 @@ build:
   script:
     - mkdir -p $PREFIX/lib/q/mod/kx
     - cp printf.q $PREFIX/lib/q/mod/kx/
+
+about:
+  homepage: https://github.com/KxSystems/printf
+  repository: https://github.com/KxSystems/printf
+  summary: Replicates a subset of the C99 printf standard to format strings.
+  description: >-
+    Replicates a subset of the C99 printf standard to format strings.
+  license: Apache-2.0
+  license_file: LICENSE
 
 tests:
   - script:
