@@ -1,0 +1,24 @@
+name: q-kx-printf
+description: >-
+  Replicates a subset of the C99 printf standard to format strings.
+homepage: https://github.com/KxSystems/printf
+namespace: kx.printf
+
+source:
+  repo: https://github.com/KxSystems/printf
+  version: 1.0.1
+  path: .
+
+license: Apache-2.0
+
+maintainers:
+  - github: KxSystems
+
+platforms:
+  - linux
+  - linux-arm
+  - mac
+  - mac-arm
+
+compatibility:
+  kdbx: ">=5.0.0"
